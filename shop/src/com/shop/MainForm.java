@@ -1,4 +1,4 @@
-package com.shop.auth;
+package com.shop;
 
 import java.io.IOException;
 
@@ -6,8 +6,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.shop.Action;
 
 public class MainForm implements Action{
 

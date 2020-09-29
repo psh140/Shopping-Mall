@@ -45,6 +45,9 @@
               <span class="sr-only">(current)</span>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="./AuthServlet?cmd=signInForm">회원가입</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="#">장바구니</a>
           </li>
           <li class="nav-item">
@@ -70,7 +73,7 @@
 
         <h1 class="my-4">Shop Name</h1>
         <div class="list-group">
-          <a href="#" class="list-group-item">상품</a>
+          <a href="./MainServlet?cmd=main" class="list-group-item">상품</a>
           <a href="#" class="list-group-item">게시판</a>
           <a href="#" class="list-group-item">Q&A</a>
         </div>

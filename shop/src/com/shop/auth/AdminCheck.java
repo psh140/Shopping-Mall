@@ -30,7 +30,7 @@ public class AdminCheck implements Action{
 		if(chk) {
 			HttpSession session = request.getSession();
 			session.setAttribute("m_id", m_id);
-			url = "./AuthServlet?cmd=main"; // 성공시 메인페이지
+			url = "./MainServlet?cmd=main"; // 성공시 메인페이지
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher(url); // 비밀번호 확인 후 해당 url로 보내기
 			dispatcher.forward(request, response); // 가지고 있는 객체는 싹 다 넘어감.
