@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,16 +27,22 @@
      <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Start Bootstrap</a>
+      <a class="navbar-brand" href="#">${sessionScope.m_id}</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="./AuthServlet?cmd=authForm">로그인<!-- (로그아웃) (로그인 페이지에 관리자 로그인) -->
+            <c:choose>
+            	<c:when test="${sessionScope.m_id == null}">
+            		<a class="nav-link" href="./AuthServlet?cmd=authForm">로그인</a><!-- (로그아웃) (로그인 페이지에 관리자 로그인) -->
+            	</c:when>
+            	<c:when test="${sessionScope.m_id != null}">
+            		<a class="nav-link" href="./AuthServlet?cmd=logoutAction">로그아웃</a><!-- (로그아웃) (로그인 페이지에 관리자 로그인) -->
+            	</c:when>
+            </c:choose>
               <span class="sr-only">(current)</span>
-            </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">장바구니</a>

@@ -55,4 +55,40 @@ public class AuthDAO {
 		
 		return chk;
 	}
+	
+	public boolean adminLogin(String m_id, String m_passwd) {
+		String sql = "";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		boolean chk = false;
+		try {
+			conn = DBConnection.getConnection();
+			sql = "select count(m_id) from member " +
+					"where m_id = ? and m_passwd = ? and m_type = 'A'";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, m_id);
+			pstmt.setString(2, m_passwd);
+			
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			int count = rs.getInt(1);
+			
+			if (count == 1) {
+				chk = true;
+			} else {
+				chk = false;
+			}
+			
+			rs.close();
+			pstmt.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.close(conn);
+		}
+		
+		return chk;
+	}
 }
