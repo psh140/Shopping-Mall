@@ -99,16 +99,16 @@ public class AuthDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "";
-		int cnt = 1; // 0ÀÌ¸é Áßº¹¾Æ´Ô 1ÀÌ¸é Áßº¹
+		int cnt = 1; // 0ì¼ì‹œ ì„±ê³µ 1ì¼ì‹œ ì‹¤íŒ¨
 		
 		try {
 			conn = DBConnection.getConnection();
-			sql = "select count(m_id) from member where m_id = ?";  //nullÀ» ¹ŞÁö ¾Ê±â À§ÇØ. °ªÀº ¾Ë ¼ö ¾øÀ½.
+			sql = "select count(m_id) from member where m_id = ?";  //nullê°’ì„ ë°›ì•„ë‚´ì§€ ì•Šê¸° ìœ„í•´ count
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, m_id);
 			rs = pstmt.executeQuery();
 			rs.next();
-			cnt = rs.getInt(1); //1¹ø Ç×¸ñÀ» intÇüÀ¸·Î ¹ŞÀ½
+			cnt = rs.getInt(1); 
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -138,7 +138,7 @@ public class AuthDAO {
 			pstmt.setString(5, m_addr);
 			pstmt.setString(6, m_date);
 			
-			pstmt.executeUpdate(); //sql¹® ½ÇÇà
+			pstmt.executeUpdate(); 
 			pstmt.close();
 		} catch(Exception e) {
 			e.printStackTrace();

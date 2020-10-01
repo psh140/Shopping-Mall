@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="UTF-8">
 
@@ -27,10 +28,9 @@
      <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-    <c:if test="${sessionScope.m_id != null}">
+     <c:if test="${sessionScope.m_id != null}">
     	<a class="navbar-brand" href="#">${sessionScope.m_id}님 환영합니다.</a>
     </c:if>
-      
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" 
       aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -87,17 +87,7 @@
 
         <h1 class="my-4">Shop Name</h1>
         <div class="list-group">
-        	<c:choose>
-        		<c:when test="${sessionScope.m_type eq 'A'}">
-        		<a href="./ProductServlet?cmd=adminProductList" class="list-group-item">관리자 상품관리</a>
-        		</c:when>
-        		<c:when test="${sessionScope.m_type eq 'C'}">
-        		<a href="./MainServlet?cmd=main" class="list-group-item">상품</a>
-        		</c:when>
-        		<c:when test="${sessionScope.m_type eq null}">
-        		<a href="./MainServlet?cmd=main" class="list-group-item">상품</a>
-        		</c:when>
-        	</c:choose>
+          <a href="./MainServlet?cmd=main" class="list-group-item">상품</a>
           <a href="#" class="list-group-item">게시판</a>
           <a href="#" class="list-group-item">Q&A</a>
         </div>
@@ -108,23 +98,50 @@
       <div class="col-lg-9">
 
         <div class="row">
-			
-			<c:forEach var="list" items="${list}">
-	          <div class="col-lg-4 col-md-6 mb-4">
-	            <div class="card h-100">
-	              <a href="./ProductServlet?cmd=productView&p_code=${list.p_code}"><img class="card-img-top" src="./product/images/${list.p_image}.png" alt=""></a>
-	              <div class="card-body">
-	                <h4 class="card-title">
-	                  <a href="./ProductServlet?cmd=productView&p_code=${list.p_code}">${list.p_name}</a>
-	                </h4>
-	                <h5><fmt:formatNumber value="${list.p_price}" type="number"/></h5>
-	              </div>
-	              <div class="card-footer">
-	                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-	              </div>
-	            </div>
+		<div class="col-lg-8">
+        
+        <!-- Title -->
+        <h1 class="mt-4">${view.p_name}</h1>
+
+        <!-- Author -->
+        <p class="lead">
+          <h4 class="mt-3"><fmt:formatNumber value="${view.p_price}" type="number"/> 원</h4>
+        </p>
+
+        <hr>
+
+        <!-- Date/Time -->
+        <p>상품번호 : ${view.p_code}</p>
+
+        <hr>
+		<c:choose>
+			<c:when test="${view.p_stat == 'Y'}">재고있음</c:when>
+			<c:when test="${view.p_stat == 'N'}">품절</c:when>
+		</c:choose>
+        <hr>
+
+        <!-- Post Content -->
+        <img class="card-img-top" src="./product/images/${view.p_image}.png" alt="">
+
+        <hr>
+
+        <!-- Comments Form -->
+        <div class="card my-4">
+          <h5 class="card-header">상품이 마음에 드십니까?</h5>
+        	<form method="POST" action="./ProductServlet?cmd=cartList">
+	          <div class="card-body">
+	              <select name="p_count">
+						<%for(int i = 1; i <= 10; i++) { %>
+							<option value=<%=i %>><%=i %></option>
+						<%} %>
+	              </select> 개
+	              <button class="btn btn-primary" type="submit">장바구니</button>  
 	          </div>
-			</c:forEach>
+          </form>
+        </div>        
+        <button class="btn btn-primary" onclick="location.href='./MainServlet?cmd=main'">리스트</button>
+        <hr>
+      </div>
 
         </div>
         <!-- /.row -->
@@ -148,8 +165,8 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="./vendor/jquery/jquery.min.js"></script>
-  <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

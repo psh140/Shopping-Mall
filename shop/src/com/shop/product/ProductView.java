@@ -1,28 +1,28 @@
-package com.shop;
+package com.shop.product;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.shop.product.ProductDAO;
-import com.shop.product.ProductVO;
+import com.shop.Action;
 
-public class MainForm implements Action{
+public class ProductView implements Action{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url = "./main.jsp";
+		String url = "./product/productView.jsp";
+		String p_code = request.getParameter("p_code");
+		System.out.println(p_code);
 		ProductDAO pDao = ProductDAO.getInstance();
-		List<ProductVO> list = pDao.selectProductList();
+		ProductVO pVo = pDao.selectProductItem(Integer.parseInt(p_code));
 		
-		request.setAttribute("list", list);
+		request.setAttribute("view", pVo);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 	}
-	
+
 }

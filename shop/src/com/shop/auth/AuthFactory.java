@@ -28,10 +28,8 @@ public class AuthFactory {
 		} else if (cmd.equals("logoutAction")) {
 			action = new LogoutAction();
 		} else if (cmd.equals("signInForm")) {
-			System.out.println("cmd=signInForm ³Ñ¾î¿È");
 			action = new SignInForm();
 		} else if (cmd.equals("signInCheck")) {
-			System.out.println("cmd=signInCheck ³Ñ¾î¿È");
 			action = new SignInCheck();
 		}
 		return action;

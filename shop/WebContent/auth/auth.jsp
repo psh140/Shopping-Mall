@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="UTF-8">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,7 +17,7 @@
 	 <!-- Custom styles for this template -->
 	 <link href="../Resources/css/shop-homepage.css" rel="stylesheet">
 
-    <title>ทฮฑืภฮ ฦ๛</title>
+    <title>๋ก๊ทธ์ธ ํผ</title>
 
 
   </head>
@@ -26,17 +26,17 @@
 
 	<div class="card align-middle" style="width:20rem; border-radius:20px;">
 		<div class="card-title" style="margin-top:30px;">
-			<h2 class="card-title text-center" style="color:#113366;">ทฮฑืภฮ ฦ๛</h2>
+			<h2 class="card-title text-center" style="color:#113366;">๋ก๊ทธ์ธ ํผ</h2>
 		</div>
 		<div class="card-body">
       <form class="form-signin" method="POST" onSubmit="logincall();return false" action="AuthServlet?cmd=authCheck">
-        <h5 class="form-signin-heading">ทฮฑืภฮ มคบธธฆ ภิทยวฯผผฟไ</h5>
+        <h5 class="form-signin-heading">๋ก๊ทธ์ธ ์ •๋ณด๋ฅผ ์…๋ ฅํ•์ธ์”</h5>
         <label for="inputEmail" class="sr-only">Your ID</label>
         <input type="text" id="uid" class="form-control" placeholder="Your ID" name="m_id" required autofocus ><BR>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="upw" class="form-control" placeholder="Password" name="m_passwd" required ><br>
-        <button id="btn-Yes" class="btn btn-lg btn-primary btn-block" type="submit">ทฮ ฑื ภฮ</button>
-        <a href="./AuthServlet?cmd=adminAuthForm">ฐüธฎภฺ ทฮฑืภฮ</a>
+        <button id="btn-Yes" class="btn btn-lg btn-primary btn-block" type="submit">๋ก ๊ทธ ์ธ</button>
+        <a href="./AuthServlet?cmd=adminAuthForm">๊ด€๋ฆฌ์ ๋ก๊ทธ์ธ</a>
       </form>
       
 		</div>

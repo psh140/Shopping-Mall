@@ -35,12 +35,12 @@ public class SignInCheck implements Action{
 			chk = aDao.validateCheck(m_id);
 			
 			if(chk == 0) {
-				System.out.println("È¸¿ø°¡ÀÔ ¼º°ø");
+				
 				aDao.insertID(m_id, m_name, m_passwd, m_phone, m_addr);
-				out.println("<script>alert('È¸¿ø°¡ÀÔÀ» ÃàÇÏµå¸³´Ï´Ù.'); location.href='./AuthServlet?cmd=authForm';</script>");
+				out.println("<script>alert('íšŒì›ê°€ì…ì„ ì¶•í•˜ë“œë¦½ë‹ˆë‹¤.'); location.href='./AuthServlet?cmd=authForm';</script>");
 			} else {
-				System.out.println("È¸¿ø°¡ÀÔ ½ÇÆĞ");
-				out.println("<script>alert('¾ÆÀÌµğ°¡ Áßº¹ÀÔ´Ï´Ù.'); history.go(-1);</script>'"); // °æ°íÃ¢ ´Ù½ÃÂ¥±â	
+				
+				out.println("<script>alert('ì•„ì´ë””ê°€ ì¤‘ë³µì…ë‹ˆë‹¤.'); history.go(-1);</script>'"); // ï¿½ï¿½ï¿½Ã¢ ï¿½Ù½ï¿½Â¥ï¿½ï¿½	
 			}
 			out.close();
 		} catch (SQLException e) {
@@ -54,13 +54,13 @@ public class SignInCheck implements Action{
 //		if(chk == 0) {
 //			HttpSession session = request.getSession();
 //			session.setAttribute("m_id", m_id);
-//			url = "./AuthServlet?cmd=main"; // ¼º°ø½Ã ¸ŞÀÎÆäÀÌÁö
+//			url = "./AuthServlet?cmd=main"; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //			
-//			RequestDispatcher dispatcher = request.getRequestDispatcher(url); // ºñ¹Ğ¹øÈ£ È®ÀÎ ÈÄ ÇØ´ç url·Î º¸³»±â
-//			dispatcher.forward(request, response); // °¡Áö°í ÀÖ´Â °´Ã¼´Â ½Ï ´Ù ³Ñ¾î°¨.
+//			RequestDispatcher dispatcher = request.getRequestDispatcher(url); // ï¿½ï¿½Ğ¹ï¿½È£ È®ï¿½ï¿½ ï¿½ï¿½ ï¿½Ø´ï¿½ urlï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//			dispatcher.forward(request, response); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ñ¾î°¨.
 //		} else {
 //			
-////			url = "./AuthServlet?cmd=authForm"; // ½ÇÆĞ½Ã ´Ù½Ã ·Î±×ÀÎÈ­¸é
+////			url = "./AuthServlet?cmd=authForm"; // ï¿½ï¿½ï¿½Ğ½ï¿½ ï¿½Ù½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½È­ï¿½ï¿½
 //			
 //		}
 		

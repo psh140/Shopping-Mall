@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="UTF-8">
 
@@ -23,14 +23,13 @@
 </head>
 
 <body>
-
+<% if (session.getAttribute("m_type") == "A") { %>
      <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
     <c:if test="${sessionScope.m_id != null}">
     	<a class="navbar-brand" href="#">${sessionScope.m_id}님 환영합니다.</a>
     </c:if>
-      
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" 
       aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -87,17 +86,7 @@
 
         <h1 class="my-4">Shop Name</h1>
         <div class="list-group">
-        	<c:choose>
-        		<c:when test="${sessionScope.m_type eq 'A'}">
-        		<a href="./ProductServlet?cmd=adminProductList" class="list-group-item">관리자 상품관리</a>
-        		</c:when>
-        		<c:when test="${sessionScope.m_type eq 'C'}">
-        		<a href="./MainServlet?cmd=main" class="list-group-item">상품</a>
-        		</c:when>
-        		<c:when test="${sessionScope.m_type eq null}">
-        		<a href="./MainServlet?cmd=main" class="list-group-item">상품</a>
-        		</c:when>
-        	</c:choose>
+          <a href="./MainServlet?cmd=main" class="list-group-item">상품</a>
           <a href="#" class="list-group-item">게시판</a>
           <a href="#" class="list-group-item">Q&A</a>
         </div>
@@ -108,23 +97,24 @@
       <div class="col-lg-9">
 
         <div class="row">
-			
-			<c:forEach var="list" items="${list}">
-	          <div class="col-lg-4 col-md-6 mb-4">
-	            <div class="card h-100">
-	              <a href="./ProductServlet?cmd=productView&p_code=${list.p_code}"><img class="card-img-top" src="./product/images/${list.p_image}.png" alt=""></a>
-	              <div class="card-body">
-	                <h4 class="card-title">
-	                  <a href="./ProductServlet?cmd=productView&p_code=${list.p_code}">${list.p_name}</a>
-	                </h4>
-	                <h5><fmt:formatNumber value="${list.p_price}" type="number"/></h5>
-	              </div>
-	              <div class="card-footer">
-	                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-	              </div>
-	            </div>
-	          </div>
-			</c:forEach>
+		<div class="col-lg-8">
+        <form method="POST" action="./ProductServlet?cmd=addProductAction">
+        <!-- Title -->
+        <h1 class="mt-4">상품 이름 <br><input type="text" name="p_name"></h1>
+
+        <p class="lead">
+          <h4 class="mt-3">상품 가격 <br><input type="text" name="p_price"></h4>
+        </p>
+        <hr>
+        <!-- Comments Form -->
+        <div class="card my-4">
+          <div class="card-body">
+              <button class="btn btn-primary" type="submit">등록</button> &nbsp;
+          </div>
+        </div>
+        </form>
+        <button class="btn btn-primary" onclick="location.href='./MainServlet?cmd=main'">리스트</button>
+      </div>
 
         </div>
         <!-- /.row -->
@@ -148,9 +138,11 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="./vendor/jquery/jquery.min.js"></script>
-  <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<%} else { %>
+	<script>alert('관리자 로그인이 필요합니다.'); location.href='./AuthServlet?cmd=adminAuthForm';</script>
+<%}%>
 </body>
 
 </html>

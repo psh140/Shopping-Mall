@@ -26,17 +26,18 @@ public class AdminCheck implements Action{
 		String url = "";
 		
 		PrintWriter out = response.getWriter();
-		System.out.println("authcheck·Î ³Ñ¾î¿È");
+		System.out.println("authcheck ë„˜ì–´ì˜´");
 		if(chk) {
 			HttpSession session = request.getSession();
 			session.setAttribute("m_id", m_id);
-			url = "./MainServlet?cmd=main"; // ¼º°ø½Ã ¸ŞÀÎÆäÀÌÁö
+			session.setAttribute("m_type", "A");
+			url = "./ProductServlet?cmd=adminProductList"; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			
-			RequestDispatcher dispatcher = request.getRequestDispatcher(url); // ºñ¹Ğ¹øÈ£ È®ÀÎ ÈÄ ÇØ´ç url·Î º¸³»±â
-			dispatcher.forward(request, response); // °¡Áö°í ÀÖ´Â °´Ã¼´Â ½Ï ´Ù ³Ñ¾î°¨.
+			RequestDispatcher dispatcher = request.getRequestDispatcher(url); // ï¿½ï¿½Ğ¹ï¿½È£ È®ï¿½ï¿½ ï¿½ï¿½ ï¿½Ø´ï¿½ urlï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			dispatcher.forward(request, response); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ñ¾î°¨.
 		} else {
-			out.println("<script>alert('·Î±×ÀÎ¿¡ ½ÇÆĞÇß½À´Ï´Ù.'); history.go(-1);</script>'"); // °æ°íÃ¢ ´Ù½ÃÂ¥±â
-//			url = "./AuthServlet?cmd=authForm"; // ½ÇÆĞ½Ã ´Ù½Ã ·Î±×ÀÎÈ­¸é
+			out.println("<script>alert('ë¡œê·¸ì¸ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.'); history.go(-1);</script>'"); // ï¿½ï¿½ï¿½Ã¢ ï¿½Ù½ï¿½Â¥ï¿½ï¿½
+//			url = "./AuthServlet?cmd=authForm"; // ï¿½ï¿½ï¿½Ğ½ï¿½ ï¿½Ù½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½È­ï¿½ï¿½
 			
 		}
 		out.close();
