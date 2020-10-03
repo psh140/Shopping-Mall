@@ -19,11 +19,17 @@
 
   <!-- Custom styles for this template -->
   <link href="./Resources/css/shop-homepage.css" rel="stylesheet">
+  
+  <script>
+	function goInsert() {
+		location.href = './BoardServlet?cmd=boardInsertAction';
+	}
+</script>
 
 </head>
 
 <body>
-
+<% if (session.getAttribute("m_id") != null) { %>
      <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -53,8 +59,11 @@
           </li>
           <li class="nav-item">
       		<c:choose>
-            	<c:when test="${sessionScope.m_type == 'C' || sessionScope.m_type == null}">
-            		<a class="nav-link" href="./ProductServlet?cmd=cartList">장바구니</a> <!-- 로그인, 비로그인일시 장바구니 -->
+            	<c:when test="${sessionScope.m_type == null}">
+            		<a class="nav-link" href="./ProductServlet?cmd=cartList">장바구니</a> <!-- 비로그인이면 장바구니 -->
+            	</c:when>
+            	<c:when test="${sessionScope.m_type == 'C'}">
+            		<a class="nav-link" href="./ProductServlet?cmd=cartList">장바구니</a> <!-- 로그인일시 장바구니 -->
             	</c:when>
             	<c:when test="${sessionScope.m_type == 'A'}">
             		<a class="nav-link" href="./ProductServlet?cmd=addProduct">상품등록</a> <!-- 관리자일시 상품등록 -->
@@ -87,24 +96,13 @@
         	<c:choose>
         		<c:when test="${sessionScope.m_type eq 'A'}">
         		<a href="./ProductServlet?cmd=adminProductList" class="list-group-item">관리자 상품관리</a>
+        		<a href="./BoardServlet?cmd=boardList" class="list-group-item">게시판 관리</a>
         		</c:when>
         		<c:when test="${sessionScope.m_type eq 'C' || sessionScope.m_type eq null}">
         		<a href="./MainServlet?cmd=main" class="list-group-item">상품</a>
+        		<a href="./BoardServlet?cmd=boardList" class="list-group-item">게시판</a>
         		</c:when>
-        		<%-- <c:when test="${}">
-        		<a href="./MainServlet?cmd=main" class="list-group-item">상품</a>
-        		</c:when> --%>
         	</c:choose>
-        	<c:choose>
-        		<c:when test="${sessionScope.m_type eq 'A'}">
-        			<a href="./BoardServlet?cmd=boardList" class="list-group-item">게시판관리</a>	
-        		</c:when>
-        		<c:when test="${sessionScope.m_type eq 'C' || sessionScope.m_type eq null}">
-        			<a href="./BoardServlet?cmd=boardList" class="list-group-item">게시판</a>	
-        		</c:when>
-        		
-        	</c:choose>
-          
           <a href="#" class="list-group-item">Q&A</a>
         </div>
 
@@ -115,22 +113,24 @@
 
         <div class="row">
 			
-			<c:forEach var="list" items="${list}">
-	          <div class="col-lg-4 col-md-6 mb-4">
-	            <div class="card h-100">
-	              <a href="./ProductServlet?cmd=productView&p_code=${list.p_code}"><img class="card-img-top" src="./product/images/${list.p_image}.png" alt=""></a>
-	              <div class="card-body">
-	                <h4 class="card-title">
-	                  <a href="./ProductServlet?cmd=productView&p_code=${list.p_code}">${list.p_name}</a>
-	                </h4>
-	                <h5><fmt:formatNumber value="${list.p_price}" type="number"/></h5>
-	              </div>
-	              <div class="card-footer">
-	                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-	              </div>
-	            </div>
-	          </div>
-			</c:forEach>
+			      <div class="col-lg-8">
+		<form action="./BoardServlet?cmd=boardInsertAction" method="post">
+        <!-- Title -->
+		<br>
+		<h1>게시판 글쓰기</h1>
+        <hr>
+		제목 <input type="text" name="b_title" style="width: 540px;">
+        <hr>
+        <!-- Post Content -->
+                 내용
+		<textarea name="b_contents" cols="74" rows="25"></textarea>
+		
+        <hr>
+		
+		<input type="submit" class="btn btn-primary" value="글쓰기">&nbsp;
+		<hr>
+		</form>
+      </div>
 
         </div>
         <!-- /.row -->
@@ -156,7 +156,9 @@
   <!-- Bootstrap core JavaScript -->
   <script src="./vendor/jquery/jquery.min.js"></script>
   <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+<%} else { %>
+	<script>alert('로그인이 필요합니다.'); location.href='./AuthServlet?cmd=authForm';</script>
+<%}%>
 </body>
 
 </html>

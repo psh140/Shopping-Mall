@@ -19,6 +19,12 @@
 
   <!-- Custom styles for this template -->
   <link href="./Resources/css/shop-homepage.css" rel="stylesheet">
+  
+  <script>
+  	function goInsertBoard() {
+  		location.href='./BoardServlet?cmd=boardInsertForm';
+  	}
+  </script>
 
 </head>
 
@@ -54,7 +60,7 @@
           <li class="nav-item">
       		<c:choose>
             	<c:when test="${sessionScope.m_type == 'C' || sessionScope.m_type == null}">
-            		<a class="nav-link" href="./ProductServlet?cmd=cartList">장바구니</a> <!-- 로그인, 비로그인일시 장바구니 -->
+            		<a class="nav-link" href="./ProductServlet?cmd=cartList">장바구니</a> <!-- 로그인일시 장바구니 -->
             	</c:when>
             	<c:when test="${sessionScope.m_type == 'A'}">
             		<a class="nav-link" href="./ProductServlet?cmd=addProduct">상품등록</a> <!-- 관리자일시 상품등록 -->
@@ -87,22 +93,12 @@
         	<c:choose>
         		<c:when test="${sessionScope.m_type eq 'A'}">
         		<a href="./ProductServlet?cmd=adminProductList" class="list-group-item">관리자 상품관리</a>
+        		<a href="./BoardServlet?cmd=boardList" class="list-group-item">게시판관리</a>
         		</c:when>
         		<c:when test="${sessionScope.m_type eq 'C' || sessionScope.m_type eq null}">
         		<a href="./MainServlet?cmd=main" class="list-group-item">상품</a>
+        		<a href="./BoardServlet?cmd=boardList" class="list-group-item">게시판</a>
         		</c:when>
-        		<%-- <c:when test="${}">
-        		<a href="./MainServlet?cmd=main" class="list-group-item">상품</a>
-        		</c:when> --%>
-        	</c:choose>
-        	<c:choose>
-        		<c:when test="${sessionScope.m_type eq 'A'}">
-        			<a href="./BoardServlet?cmd=boardList" class="list-group-item">게시판관리</a>	
-        		</c:when>
-        		<c:when test="${sessionScope.m_type eq 'C' || sessionScope.m_type eq null}">
-        			<a href="./BoardServlet?cmd=boardList" class="list-group-item">게시판</a>	
-        		</c:when>
-        		
         	</c:choose>
           
           <a href="#" class="list-group-item">Q&A</a>
@@ -115,22 +111,48 @@
 
         <div class="row">
 			
-			<c:forEach var="list" items="${list}">
-	          <div class="col-lg-4 col-md-6 mb-4">
-	            <div class="card h-100">
-	              <a href="./ProductServlet?cmd=productView&p_code=${list.p_code}"><img class="card-img-top" src="./product/images/${list.p_image}.png" alt=""></a>
-	              <div class="card-body">
-	                <h4 class="card-title">
-	                  <a href="./ProductServlet?cmd=productView&p_code=${list.p_code}">${list.p_name}</a>
-	                </h4>
-	                <h5><fmt:formatNumber value="${list.p_price}" type="number"/></h5>
-	              </div>
-	              <div class="card-footer">
-	                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-	              </div>
-	            </div>
-	          </div>
-			</c:forEach>
+			<div class="board_list_wrap">
+        <div class="board_list">
+            <div class="board_list_head">
+                <div class="num">번호</div>
+                <div class="tit">제목</div>
+                <div class="writer">글쓴이</div>
+                <div class="date">작성일</div>
+            </div>
+            <div class="board_list_body">
+            	<c:forEach var="board" items="${list}">
+            		<div class="item">
+	                    <div class="num">${board.b_num}</div>
+	                    <div class="tit">
+	                    	<a href="./BoardServlet?cmd=boardView&b_num=${board.b_num}&pageNum=${pagedata.pageNum}">${board.b_title}</a>
+	                    </div>
+	                    <div class="writer">${board.m_id}</div>
+	                    <div class="date">
+	                    	<fmt:parseDate var="date" value="${board.b_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
+	                		<fmt:formatDate value="${date}" pattern="yyyy-MM-dd"/>
+	                	</div>
+                	</div>
+            	</c:forEach>
+            </div>
+        </div>
+        <div class="paging">
+        	<c:if test="${pagedata.startPage >1}">
+        		<a href="./BoardServlet?cmd=boardList&pageNum=${pagedata.pageNum-pagedata.groupSize}" class="bt first">이전 페이지</a>
+        	</c:if>
+            <c:forEach var="i" begin="${pagedata.startPage}" end="${pagedata.endPage}">
+            	<c:if test="${i <= pagedata.lastPage}">
+            		<a href="./BoardServlet?cmd=boardList&pageNum=${i}" class="num">${i}</a>		
+            	</c:if>
+            </c:forEach>
+            <c:if test="${pagedata.endPage < pagedata.lastPage}">
+            	<a href="./BoardServlet?cmd=boardList&pageNum=${pagedata.startPage+pagedata.groupSize}" class="bt last">다음 페이지</a>
+            </c:if>
+            <div>
+            	<button class="btn btn-primary" style="margin-top: 10px;" onclick="goInsertBoard();">글쓰기</button>
+            	
+            </div>
+        </div>
+    </div>
 
         </div>
         <!-- /.row -->
@@ -146,6 +168,7 @@
   <!-- /.container -->
 
   <!-- Footer -->
+  
   <footer class="py-5 bg-dark">
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>

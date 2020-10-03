@@ -53,10 +53,7 @@
           </li>
           <li class="nav-item">
       		<c:choose>
-            	<c:when test="${sessionScope.m_type == null}">
-            		<a class="nav-link" href="./ProductServlet?cmd=cartList">장바구니</a> <!-- 비로그인이면 장바구니 -->
-            	</c:when>
-            	<c:when test="${sessionScope.m_type == 'C'}">
+            	<c:when test="${sessionScope.m_type == 'C' || sessionScope.m_type == null}">
             		<a class="nav-link" href="./ProductServlet?cmd=cartList">장바구니</a> <!-- 로그인일시 장바구니 -->
             	</c:when>
             	<c:when test="${sessionScope.m_type == 'A'}">
@@ -139,7 +136,7 @@
 	          </div>
           </form>
         </div>        
-        <button class="btn btn-primary" onclick="location.href='./MainServlet?cmd=main'">리스트</button>
+        <button class="btn btn-primary" onclick="location.href='./MainServlet?cmd=main';">리스트</button>
         <hr>
       </div>
 
