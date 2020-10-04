@@ -15,7 +15,7 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 	 <!-- Custom styles for this template -->
-	 <link href="../Resources/css/shop-homepage.css" rel="stylesheet">
+	 <link href="./Resources/css/shop-homepage.css" rel="stylesheet">
 
     <title>로그인 폼</title>
 

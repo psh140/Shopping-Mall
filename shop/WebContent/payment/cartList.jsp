@@ -21,15 +21,15 @@
   <link href="./Resources/css/shop-homepage.css" rel="stylesheet">
   
   <script>
-	function goInsert() {
-		location.href = './BoardServlet?cmd=boardInsertAction';
-	}
-</script>
+  	function goInsertBoard() {
+  		location.href='./BoardServlet?cmd=boardInsertForm';
+  	}
+  </script>
 
 </head>
 
 <body>
-<% if (session.getAttribute("m_id") != null) { %>
+
      <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -94,13 +94,14 @@
         	<c:choose>
         		<c:when test="${sessionScope.m_type eq 'A'}">
         		<a href="./ProductServlet?cmd=adminProductList" class="list-group-item">관리자 상품관리</a>
-        		<a href="./BoardServlet?cmd=boardList" class="list-group-item">게시판 관리</a>
+        		<a href="./BoardServlet?cmd=boardList" class="list-group-item">게시판관리</a>
         		</c:when>
         		<c:when test="${sessionScope.m_type eq 'C' || sessionScope.m_type eq null}">
         		<a href="./MainServlet?cmd=main" class="list-group-item">상품</a>
         		<a href="./BoardServlet?cmd=boardList" class="list-group-item">게시판</a>
         		</c:when>
         	</c:choose>
+          
           <a href="#" class="list-group-item">Q&A</a>
         </div>
 
@@ -111,26 +112,34 @@
 
         <div class="row">
 			
-			      <div class="col-lg-8">
-		<form action="./BoardServlet?cmd=boardUpdateAction" method="post">
-		<input type="hidden" name="b_num" value="${view.b_num}">
-		<input type="hidden" name="pageNum" value="${param.pageNum}">
-        <!-- Title -->
-		<br>
-		<h1>수정하기</h1>
-        <hr>
-		제목 <input type="text" name="b_title" style="width: 540px;" value="${view.b_title}">
-        <hr>
-        <!-- Post Content -->
-                 내용
-		<textarea name="b_contents" cols="74" rows="25">${view.b_contents}</textarea>
-		
-        <hr>
-		
-		<input type="submit" class="btn btn-primary" value="수정하기">&nbsp;
-		<hr>
-		</form>
-      </div>
+			<div class="board_list_wrap">
+        <div class="board_list">
+            <div class="board_list_head">
+                <div class="num">상품번호</div>
+                <div class="tit">상품이름</div>
+                <div class="writer">상품갯수</div>
+                <div class="date">가격</div>
+            </div>
+            <div class="board_list_body">
+            	<c:forEach var="board" items="${list}">
+            		<div class="item">
+	                    <div class="num">${board.b_num}</div><!-- 상품번호 -->
+	                    <div class="tit"><!-- 상품이름 -->
+	                    	<a href="./BoardServlet?cmd=boardView&b_num=${board.b_num}&pageNum=${pagedata.pageNum}">${board.b_title}</a>
+	                    </div>
+	                    <div class="writer">${board.m_id}개</div> <!-- 상품갯수 -->
+	                    <div class="date">
+	                    	<fmt:parseDate var="date" value="${board.b_date}" pattern="yyyy-MM-dd HH:mm:ss"/><!-- 상품총가격 -->
+	                		<fmt:formatDate value="${date}" pattern="yyyy-MM-dd"/>
+	                	</div>
+                	</div>
+            	</c:forEach>
+            </div>
+        </div>
+        <div class="paging">
+           <button class="btn btn-primary" style="margin-top: 10px;" onclick="goInsertBoard();">결제하기</button>
+        </div>
+    </div>
 
         </div>
         <!-- /.row -->
@@ -146,6 +155,7 @@
   <!-- /.container -->
 
   <!-- Footer -->
+  
   <footer class="py-5 bg-dark">
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
@@ -156,9 +166,7 @@
   <!-- Bootstrap core JavaScript -->
   <script src="./vendor/jquery/jquery.min.js"></script>
   <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<%} else { %>
-	<script>alert('로그인이 필요합니다.'); location.href='./AuthServlet?cmd=authForm';</script>
-<%}%>
+
 </body>
 
 </html>

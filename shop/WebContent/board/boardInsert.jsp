@@ -59,14 +59,12 @@
           </li>
           <li class="nav-item">
       		<c:choose>
-            	<c:when test="${sessionScope.m_type == null}">
-            		<a class="nav-link" href="./ProductServlet?cmd=cartList">장바구니</a> <!-- 비로그인이면 장바구니 -->
-            	</c:when>
             	<c:when test="${sessionScope.m_type == 'C'}">
-            		<a class="nav-link" href="./ProductServlet?cmd=cartList">장바구니</a> <!-- 로그인일시 장바구니 -->
+            		<a class="nav-link" href="./ProductServlet?cmd=cartList">장바구니</a> <!-- 로그인, 비로그인일시 장바구니 -->
             	</c:when>
             	<c:when test="${sessionScope.m_type == 'A'}">
             		<a class="nav-link" href="./ProductServlet?cmd=addProduct">상품등록</a> <!-- 관리자일시 상품등록 -->
+            		<a class="nav-link" href="./ProductServlet?cmd=AdminPayment">결제관리</a> <!-- 관리자일시 상품등록 -->
             	</c:when>
             </c:choose>
           </li>

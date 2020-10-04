@@ -18,6 +18,7 @@ import org.apache.commons.fileupload.FileItem;
 
 import com.shop.Action;
 import com.shop.DBConnection;
+import com.shop.payment.PaymentFactory;
 
 /**
  * Servlet implementation class ProductServlet
@@ -42,6 +43,7 @@ public class ProductServlet extends HttpServlet {
 		
 		String cmd = request.getParameter("cmd");
 		ProductFactory pf = ProductFactory.getInstance();
+		
 		Action action = pf.getAction(cmd);
 		if(action != null) {
 			action.execute(request, response);
@@ -54,9 +56,9 @@ public class ProductServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String cmd = request.getParameter("cmd");
-		System.out.println(cmd);
+		
 		String p_code = request.getParameter("p_code");
-		System.out.println(p_code);
+		
 		if (cmd.equals("uploadIamge")) {
 			uploadOk(request, response, p_code);
 			String url = "./ProductServlet?cmd=adminProductList&p_code=" + p_code;
