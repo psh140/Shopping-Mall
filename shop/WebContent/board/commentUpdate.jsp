@@ -25,8 +25,8 @@
 		location.href = './BoardServlet?cmd=boardList&pageNum=' + num;
 	}
 	
-	function goUpdate(b_num, pageNum) {
-		location.href = './BoardServlet?cmd=boardUpdate&b_num=' + b_num + '&pageNum=' + pageNum;
+	function goUpdate(num) {
+		location.href = './BoardServlet?cmd=boardUpdate&b_num=' + num;
 	}
 	
 	function Delete(num) {
@@ -38,18 +38,12 @@
 		}
 	}
 	
-	function goCommentUpdate(c_num, b_num, pageNum) {
-		location.href ='./BoardServlet?cmd=commentUpdateForm&c_num=' + c_num + '&b_num=' + b_num + '&pageNum=' + pageNum; 
+	function goCommentUpdate(num) {
+		location.href ='./BoardServlet?cmd=commentUpdate&c_num=' + num; 
 	}
 	
-	function commentDelete(c_num, b_num, pageNum) {
-		if (confirm('정말 삭제하시겠습니까?') == true) {
-			location.href = './BoardServlet?cmd=commentDelete&c_num=' + c_num + '&b_num=' + b_num + '&pageNum=' + pageNum;
-			return true;
-		} else {
-			return false;
-		}
-		
+	function commentDelete(num) {
+		location.href = './BoardServlet?cmd=commentDelete&c_num=' + num;
 	}
 	
 	
@@ -171,7 +165,7 @@
 		<input type="button" class="btn btn-primary" value="리스트" onclick="goList(${param.pageNum});">&nbsp;
 
 		<c:if test="${sessionScope.m_id == view.m_id}">
-			<input type="button" class="btn btn-primary" value="수정" onclick="goUpdate(${view.b_num}, ${param.pageNum});">&nbsp;
+			<input type="button" class="btn btn-primary" value="수정" onclick="goUpdate(${view.b_num});">&nbsp;
 		</c:if>
 		<c:if test="${sessionScope.m_id == view.m_id || sessionScope.m_type == 'A'}">
 			<input type="button" class="btn btn-primary" value="삭제" onclick="Delete(${view.b_num});">	
@@ -182,33 +176,20 @@
         <div class="card my-4">
           <h5 class="card-header">댓글:</h5>
           <div class="card-body">
-            <form action="./BoardServlet?cmd=commentInsert" method="post">
-            <input type="hidden" name="b_num" value="${view.b_num}">
+            <form action="./BoardServlet?cmd=commentUpdate" method="post">
+            <input type="hidden" name="b_num" value="${param.b_num}">
             <input type="hidden" name="pageNum" value="${param.pageNum}">
+            <input type="hidden" name="c_num" value="${comment.c_num}">
               <div class="form-group">
-                <textarea class="form-control" rows="3" name="c_contents"></textarea>
+                <textarea class="form-control" rows="3" name="c_contents">${comment.c_contents}</textarea>
               </div>
-              <button type="submit" class="btn btn-primary">댓글작성</button>
+              <button type="submit" class="btn btn-primary">수정</button>
             </form>
           </div>
         </div>
 
         <!-- Single Comment -->
-        <c:forEach var="comment" items="${comment}">
-	        <div class="media mb-4">
-	          <div class="media-body">
-	            <h5 class="mt-0">${comment.m_id}</h5>
-	            	${comment.c_contents}
-	            	<br>
-	         <c:if test="${sessionScope.m_id == comment.m_id}">
-				<input type="button" class="btn btn-primary" value="수정" onclick="goCommentUpdate(${comment.c_num}, ${view.b_num}, ${param.pageNum});">&nbsp;
-			</c:if>
-			<c:if test="${sessionScope.m_id == view.m_id || sessionScope.m_type == 'A'}">
-				<input type="button" class="btn btn-primary" value="삭제" onclick="commentDelete(${comment.c_num}, ${view.b_num}, ${param.pageNum});">	
-			</c:if>
-	          </div>
-	        </div>
-		</c:forEach>
+
       </div>
 
         </div>

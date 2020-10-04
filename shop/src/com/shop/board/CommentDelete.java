@@ -1,7 +1,6 @@
 package com.shop.board;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,20 +8,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.shop.Action;
 
-public class BoardDelete implements Action{
+public class CommentDelete implements Action{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String b_num = request.getParameter("b_num");
-//		PrintWriter out = response.getWriter();
+		String c_num = request.getParameter("c_num");
+		String pageNum = request.getParameter("pageNum");
 		
 		BoardDAO bDao = BoardDAO.getInstance();
 		
-		bDao.deleteBoard(Integer.parseUnsignedInt(b_num));
+		bDao.deleteComment(Integer.parseInt(c_num), Integer.parseInt(b_num));
 		
-		response.sendRedirect("./BoardServlet?cmd=boardList");
-//		out.println("<script>alret('삭제되었습니다.'); location.href='./BoardServlet?cmd=boardList';</script>");
-//		out.close();
+		String url = "./BoardServlet?cmd=boardView&b_num=" + b_num + "&pageNum=" + pageNum;
+		response.sendRedirect(url);
 	}
-
 }

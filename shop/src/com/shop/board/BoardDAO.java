@@ -54,7 +54,7 @@ public class BoardDAO {
 				bVo.setB_date(rs.getString("b_date"));
 				bVo.setB_ip(rs.getString("b_ip"));
 				
-				System.out.println(bVo.getB_num());
+				
 				list.add(bVo);
 			}
 			rs.close();
@@ -64,7 +64,6 @@ public class BoardDAO {
 		} finally {
 			DBConnection.close(conn);
 		}
-		System.out.println("selectAll 호출");
 		
 		return list;
 	}
@@ -101,21 +100,13 @@ public class BoardDAO {
 			pVo.setStartPage(startPage);
 			pVo.setEndPage(endPage);
 			pVo.setLastPage(lastPage);
-			
-			System.out.println("pVo출력");
-			System.out.println(pVo.getPageNum());
-			System.out.println(pVo.getPageSize());
-			System.out.println(pVo.getGroupSize());
-			System.out.println(pVo.getStartPage());
-			System.out.println(pVo.getEndPage());
-			System.out.println(pVo.getLastPage());
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			DBConnection.close(conn);
 		}
-		System.out.println("pagingBoard 호출");
+		
 		return pVo;
 	}
 	
@@ -218,6 +209,150 @@ public class BoardDAO {
 		} finally {
 			DBConnection.close(conn);
 		}
+	}
+	
+	public List<CommentVO> selectAllComment(int b_num) {
 		
+		
+		String sql = "";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		List<CommentVO> list = new ArrayList<CommentVO>();
+		
+		
+		try {
+			conn = DBConnection.getConnection();
+			sql = "select * from board_comment where b_num = ? order by c_num desc";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_num);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				CommentVO cVo = new CommentVO();
+				cVo.setC_num(rs.getInt("c_num"));
+				cVo.setB_num(rs.getInt("b_num"));
+				cVo.setM_id(rs.getString("m_id"));
+				cVo.setC_contents(rs.getString("c_contents").replace("\r\n", "<br>"));
+				cVo.setC_date(rs.getString("c_date"));
+				cVo.setC_ip(rs.getString("c_ip"));
+				
+				
+				list.add(cVo);
+			}
+			
+			rs.close();
+			pstmt.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.close(conn);
+		}
+		return list;
+	}
+	
+	public void insertComment(CommentVO cVo) {
+		String sql = "";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			sql = "insert into board_comment values(" +
+					"seq_c_num.nextval, ?, ?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cVo.getB_num());
+			pstmt.setString(2, cVo.getM_id());
+			pstmt.setString(3, cVo.getC_contents());
+			pstmt.setString(4, MyDate.getDate());
+			pstmt.setString(5, cVo.getC_ip());
+			pstmt.executeUpdate(); //sql문 실행
+			System.out.println("insertComment 실행");
+			pstmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.close(conn);
+		}
+	}
+	
+	public CommentVO selectCommentItem(int c_num) {
+		String sql = "";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		CommentVO cVo = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			sql = "select * from board_comment where c_num = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, c_num);
+			rs = pstmt.executeQuery();
+			rs.next();
+			
+			cVo = new CommentVO();
+			cVo.setC_num(rs.getInt("c_num"));
+			cVo.setB_num(rs.getInt("b_num"));
+			cVo.setM_id(rs.getString("m_id"));
+			cVo.setC_contents(rs.getString("c_contents").replace("\r\n", "<br>")); // 여기 수정할것
+			cVo.setC_date(rs.getString("c_date"));
+			cVo.setC_ip(rs.getString("c_ip"));
+			
+			rs.close();
+			pstmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.close(conn);
+		}
+		return cVo;
+	}
+	
+	public void updateComment(CommentVO cVo) {
+		String sql = "";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			sql = "update board_comment set c_contents = ? where c_num = ? and b_num = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, cVo.getC_contents());
+			pstmt.setInt(2, cVo.getC_num());
+			pstmt.setInt(3, cVo.getB_num());
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.close(conn);
+		}
+	}
+	
+	public void deleteComment(int c_num, int b_num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "";
+		
+		try {
+			System.out.println("deleteComment method 호출");
+			conn = DBConnection.getConnection();
+			
+			sql = "delete from board_comment where c_num = ? and b_num = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, c_num);
+			pstmt.setInt(2, b_num);
+			pstmt.executeUpdate();
+			
+			pstmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.close(conn);
+		}
 	}
 }

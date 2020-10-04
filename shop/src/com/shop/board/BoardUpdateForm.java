@@ -13,7 +13,7 @@ public class BoardUpdateForm implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url = "./board/boardUpate.jsp";
+		String url = "./board/boardUpdate.jsp";
 		String b_num = request.getParameter("b_num");
 		
 		BoardDAO bDao = BoardDAO.getInstance();

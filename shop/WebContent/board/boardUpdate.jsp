@@ -116,6 +116,7 @@
 			      <div class="col-lg-8">
 		<form action="./BoardServlet?cmd=boardUpdateAction" method="post">
 		<input type="hidden" name="b_num" value="${view.b_num}">
+		<input type="hidden" name="pageNum" value="${param.pageNum}">
         <!-- Title -->
 		<br>
 		<h1>수정하기</h1>

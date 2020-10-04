@@ -32,6 +32,14 @@ public class BoardFactory {
 			action = new BoardUpdateAction();
 		} else if(cmd.equals("boardDelete")) {
 			action = new BoardDelete();
+		} else if(cmd.equals("commentInsert")) {
+			action = new CommentInsert();
+		} else if(cmd.equals("commentUpdateForm")) {
+			action = new CommentUpdateForm();
+		} else if(cmd.equals("commentUpdate")) {
+			action = new CommentUpdateAction();
+		} else if(cmd.equals("commentDelete")) {
+			action = new CommentDelete();
 		}
 		return action;
 		
