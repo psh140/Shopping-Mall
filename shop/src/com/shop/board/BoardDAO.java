@@ -159,7 +159,7 @@ public class BoardDAO {
 			pstmt.setString(4, MyDate.getDate());
 			pstmt.setString(5, bVo.getB_ip());
 			pstmt.executeUpdate(); //sql문 실행
-			System.out.println("insertBoard 실행");
+			
 			pstmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -269,7 +269,7 @@ public class BoardDAO {
 			pstmt.setString(4, MyDate.getDate());
 			pstmt.setString(5, cVo.getC_ip());
 			pstmt.executeUpdate(); //sql문 실행
-			System.out.println("insertComment 실행");
+			
 			pstmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -339,13 +339,35 @@ public class BoardDAO {
 		String sql = "";
 		
 		try {
-			System.out.println("deleteComment method 호출");
+			
 			conn = DBConnection.getConnection();
 			
 			sql = "delete from board_comment where c_num = ? and b_num = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, c_num);
 			pstmt.setInt(2, b_num);
+			pstmt.executeUpdate();
+			
+			pstmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.close(conn);
+		}
+	}	
+	
+	public void deleteCommentAll(int b_num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "";
+		
+		try {
+			
+			conn = DBConnection.getConnection();
+			
+			sql = "delete from board_comment where b_num = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_num);
 			pstmt.executeUpdate();
 			
 			pstmt.close();

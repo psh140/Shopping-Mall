@@ -12,7 +12,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Shop Homepage - Start Bootstrap Template</title>
+  <title>게시판</title>
 
   <!-- Bootstrap core CSS -->
   <link href="./Resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -64,7 +64,7 @@
             	</c:when>
             	<c:when test="${sessionScope.m_type == 'A'}">
             		<a class="nav-link" href="./ProductServlet?cmd=addProduct">상품등록</a> <!-- 관리자일시 상품등록 -->
-            		<a class="nav-link" href="./ProductServlet?cmd=AdminPayment">결제관리</a> <!-- 관리자일시 상품등록 -->
+            		
             	</c:when>
             </c:choose>
           </li>
@@ -101,7 +101,9 @@
         		<a href="./BoardServlet?cmd=boardList" class="list-group-item">게시판</a>
         		</c:when>
         	</c:choose>
-          
+            <c:if test="${sessionScope.m_type eq 'A'}">
+        		<a class="list-group-item" href="./ProductServlet?cmd=AdminPayment">결제관리</a> <!-- 관리자일시 상품등록 -->
+        	</c:if>
           <a href="#" class="list-group-item">Q&A</a>
         </div>
 

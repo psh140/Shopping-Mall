@@ -2,6 +2,7 @@ package com.shop.board;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +18,8 @@ public class BoardDelete implements Action{
 //		PrintWriter out = response.getWriter();
 		
 		BoardDAO bDao = BoardDAO.getInstance();
-		
-		bDao.deleteBoard(Integer.parseUnsignedInt(b_num));
+		bDao.deleteCommentAll(Integer.parseInt(b_num));
+		bDao.deleteBoard(Integer.parseInt(b_num));
 		
 		response.sendRedirect("./BoardServlet?cmd=boardList");
 //		out.println("<script>alret('삭제되었습니다.'); location.href='./BoardServlet?cmd=boardList';</script>");

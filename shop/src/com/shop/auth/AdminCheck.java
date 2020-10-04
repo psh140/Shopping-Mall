@@ -26,7 +26,7 @@ public class AdminCheck implements Action{
 		String url = "";
 		
 		PrintWriter out = response.getWriter();
-		System.out.println("authcheck 넘어옴");
+		
 		if(chk) {
 			HttpSession session = request.getSession();
 			session.setAttribute("m_id", m_id);

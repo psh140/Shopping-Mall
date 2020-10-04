@@ -87,9 +87,8 @@ public class ProductServlet extends HttpServlet {
 			item = (FileItem)params.next();
 			String fileName = item.getName();
 			
-			System.out.println("fileName : "+fileName);
 			String imgFile = path + "\\" + p_code + ".png";
-			System.out.println("imgFile : "+imgFile);
+			
 			File file = new File(imgFile);
 			item.write(file);
 			
