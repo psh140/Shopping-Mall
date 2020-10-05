@@ -24,7 +24,7 @@
 
   <body cellpadding="0" cellspacing="0" marginleft="0" margintop="0" width="500" height="500">
 
-	<div class="card align-middle" style="width:20rem; border-radius:20px;">
+	<div class="card align-middle" style="width:20rem; border-radius:20px; position: absolute; top: 10%; left: 40%;">
 		<div class="card-title" style="margin-top:30px;">
 			<h2 class="card-title text-center" style="color:#113366;">로그인 폼</h2>
 		</div>

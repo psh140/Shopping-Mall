@@ -60,7 +60,7 @@
           <li class="nav-item">
       		<c:choose>
             	<c:when test="${sessionScope.m_type == 'C'}">
-            		<a class="nav-link" href="./ProductServlet?cmd=cartList">장바구니</a> <!-- 로그인, 비로그인일시 장바구니 -->
+            		<a class="nav-link" href="./PaymentServlet?cmd=cartList">장바구니</a> <!-- 로그인, 비로그인일시 장바구니 -->
             	</c:when>
             	<c:when test="${sessionScope.m_type == 'A'}">
             		<a class="nav-link" href="./ProductServlet?cmd=addProduct">상품등록</a> <!-- 관리자일시 상품등록 -->

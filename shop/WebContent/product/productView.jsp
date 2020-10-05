@@ -54,7 +54,7 @@
           <li class="nav-item">
       		<c:choose>
             	<c:when test="${sessionScope.m_type == 'C'}">
-            		<a class="nav-link" href="./ProductServlet?cmd=cartList">장바구니</a> <!-- 로그인, 비로그인일시 장바구니 -->
+            		<a class="nav-link" href="./PaymentServlet?cmd=cartList">장바구니</a> <!-- 로그인, 비로그인일시 장바구니 -->
             	</c:when>
             	<c:when test="${sessionScope.m_type == 'A'}">
             		<a class="nav-link" href="./ProductServlet?cmd=addProduct">상품등록</a> <!-- 관리자일시 상품등록 -->
@@ -126,7 +126,8 @@
         <!-- Comments Form -->
         <div class="card my-4">
           <h5 class="card-header">상품이 마음에 드십니까?</h5>
-        	<form method="POST" action="./ProductServlet?cmd=addCartList">
+        	<form method="POST" action="./PaymentServlet?cmd=addCartList">
+        	<input type="hidden" name="p_code" value="${view.p_code}">
 	          <div class="card-body">
 	              <select name="p_count">
 						<%for(int i = 1; i <= 10; i++) { %>

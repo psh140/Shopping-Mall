@@ -1,9 +1,11 @@
 package com.shop.payment;
 
 public class CartVO {
-	int cr_id;
+	/* cart_main */
+	int cr_id; 
 	String m_id;
 	
+	/* cart_sub */
 	int crs_id;
 	int p_code;
 	int p_count;
